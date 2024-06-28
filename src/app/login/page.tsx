@@ -31,9 +31,7 @@ export default function page() {
 
   const router = useRouter();
   const { toast } = useToast();
-  const { isPending, isError, data, error }  = useLogin();
-
-  console.log(data)
+  const { onLogin }  = useLogin();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -44,8 +42,9 @@ export default function page() {
   });
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    console.log(data)
-
+    const {email, password} = data;
+    let {dataRes, isError, error} = onLogin(email, password);
+    debugger
     //router.push('/dashboard')
 
     toast({
@@ -57,6 +56,7 @@ export default function page() {
       ),
     });
   }
+
 
   return (
     <div className="w-full h-full flex justify-center mt-32">
