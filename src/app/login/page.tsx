@@ -70,51 +70,53 @@ export default function page() {
 
 
   return (
-    <div className="w-full h-full flex justify-center mt-32">
-      <Form  {...form}>
-        <form 
-          onSubmit={(e) => {
-            e.preventDefault()
-            form.handleSubmit(onSubmit)()
-          }} 
-          className="w-2/3 space-y-6">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <>
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="shadcn" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              </>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <>
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" placeholder="shadcn" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              </>
-            )}
-          />
-          {
-            mutation.isPending 
-              ? <ButtonLoading /> 
-              : <Button type="submit">Login</Button>
-          }
-        </form>
-      </Form>
+    <div className="w-full h-full flex justify-center mt-80">
+      <div className="flex flex-col justify-center items-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20">
+        <Form  {...form}>
+          <form 
+            onSubmit={(e) => {
+              e.preventDefault()
+              form.handleSubmit(onSubmit)()
+            }} 
+            className="w-2/3 space-y-6">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <>
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="shadcn" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                </>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <>
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" placeholder="shadcn" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                </>
+              )}
+            />
+            {
+              mutation.isPending 
+                ? <ButtonLoading /> 
+                : <Button type="submit">Login</Button>
+            }
+          </form>
+        </Form>
+      </div>
     </div>
   );
 }
