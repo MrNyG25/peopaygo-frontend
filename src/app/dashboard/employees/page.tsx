@@ -13,27 +13,27 @@ import {
 } from "@/components/ui/table"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
-import { CustomerResponse } from "./interfaces/CustomersResponse";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Pencil1Icon , PlusIcon} from "@radix-ui/react-icons";
+import { EmployeeResponse } from "./interfaces/EmployeeResponse";
+import { Pencil1Icon, PlusIcon } from "@radix-ui/react-icons";
 
 
 export default function page() {
 
   const fetchUsers= async ()  => {
-    let res = await axios.get<CustomerResponse>('http://127.0.0.1:8000/api/customers');
+    let res = await axios.get<EmployeeResponse>('http://127.0.0.1:8000/api/employees');
     return res.data.data;
   };
 
   const { isPending, isError, data, error } = useQuery({
-    queryKey: ['customers'],
+    queryKey: ['employee'],
     queryFn: fetchUsers
   })
   
   return (
     <div className="w-100">
-      <Link href={'/dashboard/customers/customer-form'}>
+      <Link href={'/dashboard/employees/employee-form'}>
         <Button >
           <PlusIcon className="mr-1 h-4 w-4"/>
           Add
@@ -54,20 +54,20 @@ export default function page() {
             <TableRow key={1}>
               <TableCell colSpan={1} className="text-right">Loading...</TableCell>
             </TableRow>
-            : data?.map((customer) => (
-              <TableRow key={customer.id}>
-                <TableCell className="font-medium">{customer.name}</TableCell>
-                <TableCell>{customer.created_at}</TableCell>
+            : data?.map((employee) => (
+              <TableRow key={employee.id}>
+                <TableCell className="font-medium">{employee.name}</TableCell>
+                <TableCell>{employee.created_at}</TableCell>
                 <TableCell className="text-right">
-                  <Link href={{
-                    pathname: '/dashboard/customers/customer-form',
-                    query: { id: customer.id },
-                  }}>
-                    <Button >
-                      <Pencil1Icon className="mr-1 h-4 w-4"/>
-                      Edit
-                    </Button>
-                  </Link>
+                    <Link href={{
+                      pathname: '/dashboard/employees/employee-form',
+                      query: { id: employee.id },
+                    }}>
+                      <Button >
+                        <Pencil1Icon className="mr-1 h-4 w-4"/>
+                        Edit
+                      </Button>
+                    </Link>
                 </TableCell>
               </TableRow>
             ))

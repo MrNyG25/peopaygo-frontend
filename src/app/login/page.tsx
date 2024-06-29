@@ -18,8 +18,8 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-import { LoginData } from "./interfaces/LoginData";
 import { ButtonLoading } from "@/components/ui/ButtonLoading";
+import { LoginData } from "./interfaces/LoginData";
 import { LoginResponse } from "./interfaces/LoginResponse";
 
 const FormSchema = z.object({
