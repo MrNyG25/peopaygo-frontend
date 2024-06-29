@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-import { ButtonLoading } from "@/components/ui/ButtonLoading";
+import { ButtonLoading } from "@/components/ButtonLoading";
 import { LoginData } from "./interfaces/LoginData";
 import { LoginResponse } from "./interfaces/LoginResponse";
 

@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { ButtonLoading } from "@/components/ui/ButtonLoading";
+import { ButtonLoading } from "@/components/ButtonLoading";
 import { EmployeeData } from "./interfaces/EmployeeData";
 import { SaveEmployeeResponse } from "./interfaces/SaveEmployeeResponse";
 import { PlusIcon } from "@radix-ui/react-icons";
