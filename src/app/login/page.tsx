@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import axios from "axios";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,7 +17,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import { useLogin } from "./hooks/useLogin";
+import { useMutation } from "@tanstack/react-query";
+import { LoginData } from "./interfaces/LoginData";
+import { ButtonLoading } from "@/components/ui/ButtonLoading";
+import { LoginResponse } from "./interfaces/LoginResponse";
 
 const FormSchema = z.object({
   email: z.string().email({
@@ -29,39 +33,51 @@ const FormSchema = z.object({
 
 export default function page() {
 
+  const mutation = useMutation({
+    mutationFn: (data: LoginData): Promise<LoginResponse> => {
+      return axios.post('http://127.0.0.1:8000/api/login', data)
+    },
+    onSuccess: (data) => {
+      localStorage.setItem('token', JSON.stringify(data!.data));
+      router.push('/dashboard');
+    },
+    onError: (error) => {
+      toast({
+        title: "Message",
+        description: (
+          <p>Email or password invalid</p>
+        ),
+      });
+    }
+  })
+
+
   const router = useRouter();
   const { toast } = useToast();
-  const { onLogin }  = useLogin();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      email: "hello@gmail.com",
-      password: "12345678"
+      email: "conn.vada@example.net",
+      password: "password123"
     },
   });
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
     const {email, password} = data;
-    let {dataRes, isError, error} = onLogin(email, password);
-    debugger
-    //router.push('/dashboard')
-
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+    mutation.mutate({email, password})
   }
 
 
   return (
     <div className="w-full h-full flex justify-center mt-32">
       <Form  {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+        <form 
+          onSubmit={(e) => {
+            e.preventDefault()
+            form.handleSubmit(onSubmit)()
+          }} 
+          className="w-2/3 space-y-6">
           <FormField
             control={form.control}
             name="email"
@@ -92,7 +108,11 @@ export default function page() {
               </>
             )}
           />
-          <Button type="submit">Login</Button>
+          {
+            mutation.isPending 
+              ? <ButtonLoading /> 
+              : <Button type="submit">Login</Button>
+          }
         </form>
       </Form>
     </div>
