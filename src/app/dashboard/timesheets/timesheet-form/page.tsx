@@ -8,7 +8,7 @@ export default async function Page() {
   
   let userData = getUserDataServer();
     
-  const res = await getEmployeesByCustomerId(userData.user_id);
+  const res = await getEmployeesByCustomerId(userData.user.customer.id);
 
   const employees = res;
   

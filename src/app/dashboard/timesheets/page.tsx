@@ -13,10 +13,17 @@ export default async function page() {
   
   let userData = getUserDataServer();
   
-  const res = await getTimesheetsByCustomerId(userData.user_id);
+  const res = await getTimesheetsByCustomerId(userData.user.customer.id);
+  
+  let timesheets = res?.data;
+  let timesheetsTotal = res?.timesheetsTotal;
 
-  const timesheets = res.data;
-  const timesheetsTotal = res.timesheetsTotal;
+  if(res?.hasError){
+    timesheets = []
+    timesheetsTotal = 0
+  }
+  
+  
 
 
   return (

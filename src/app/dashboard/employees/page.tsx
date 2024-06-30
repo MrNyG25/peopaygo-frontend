@@ -4,7 +4,6 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import { DataTable } from "@/components/DataTable";
 import { columns } from "./columns";
 import { getEmployeesByCustomerId } from "@/app/actions/employees/employeesActions";
-import { useEffect } from "react";
 import { getUserDataServer } from "@/utils/getUserDataServer";
 
 
@@ -12,7 +11,11 @@ export default async function page() {
 
   let userData = getUserDataServer();
 
-  let employees = await getEmployeesByCustomerId(userData.user_id);
+  let employees = await getEmployeesByCustomerId(userData.user.customer.id);
+
+  if(!employees){
+    return <p>Loading</p>
+  }
 
   return (
     <section>
