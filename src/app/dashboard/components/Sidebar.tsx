@@ -5,12 +5,10 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { AvatarIcon, FileIcon, PersonIcon } from '@radix-ui/react-icons'
-import { usePathname } from 'next/navigation'
-
+import { usePathname } from "next/navigation";
   
 export function Sidebar() {
   const pathname = usePathname()
-
   
   return (
     <div className={"pb-12"}>
@@ -22,7 +20,7 @@ export function Sidebar() {
           <div className="space-y-1">
             <Link href="/dashboard/customers">
               <Button
-                  variant="secondary"
+                  variant={pathname == "/dashboard/customers" ? "secondary" : "ghost"}
                   size="sm"
                   className={`w-full justify-start`}
               >
@@ -32,7 +30,7 @@ export function Sidebar() {
             </Link>
             <Link href="/dashboard/employees">
               <Button
-                  variant="secondary"
+                  variant={pathname == "/dashboard/employees" ? "secondary" : "ghost"}
                   size="sm"
                   className="w-full justify-start"
               >
@@ -41,7 +39,11 @@ export function Sidebar() {
               </Button>
             </Link>
             <Link href="/dashboard/timesheets">
-              <Button variant="ghost" size="sm" className="w-full justify-start">
+              <Button 
+                variant={pathname == "/dashboard/timesheets" ? "secondary" : "ghost"}
+                size="sm" 
+                className="w-full justify-start"
+              >
                 <FileIcon className="mr-2 h-4 w-4"/>
                 Timesheets
               </Button>
