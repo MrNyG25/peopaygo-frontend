@@ -19,7 +19,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { ButtonLoading } from "@/components/ButtonLoading";
 import { PlusIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
-import { createCustomer, getCustomerById } from "@/app/actions/customers/customerActions";
+import { createCustomer, getCustomerById, updateCustomer } from "@/app/actions/customers/customerActions";
 import { useEffect, useState } from "react";
 
 const FormSchema = z.object({
@@ -79,7 +79,13 @@ export default function Page() {
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     setIsSaving(true);
 
-    let res = await createCustomer(data);
+    let res: any = null;
+
+    if(id){
+      res = await updateCustomer(+id!,data);
+    }else{
+      res = await createCustomer(data);
+    }
 
     if(res?.hasError){
       toast({

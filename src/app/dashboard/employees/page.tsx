@@ -1,18 +1,18 @@
-
-"use client"
-
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PlusIcon } from "@radix-ui/react-icons";
-import { useEmployees } from "./employees.queries";
 import { DataTable } from "@/components/DataTable";
 import { columns } from "./columns";
+import { getEmployeesByClientId } from "@/app/actions/employees/employeesActions";
 
 
-export default function page() {
+export default async function page() {
 
-  const { employees } = useEmployees();
+  let employees = await getEmployeesByClientId(1);
   
+  if(!employees){
+    return (<p>Loading...</p>)
+  }
 
   return (
     <section>
@@ -21,7 +21,7 @@ export default function page() {
         <Link href={'/dashboard/employees/employee-form'}>
           <Button >
             <PlusIcon className="mr-1 h-4 w-4"/>
-            Add timesheet
+            Add employee
           </Button>
         </Link>
         <DataTable

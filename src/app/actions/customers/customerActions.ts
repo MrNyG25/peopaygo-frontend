@@ -37,4 +37,15 @@ export const getCustomerById = async (id: any)  => {
     }
 };
 
+export const updateCustomer = async (id: any, data: any)  => {
+    try {
+        let res = await axios.get<any>(`http://127.0.0.1:8000/api/customers/${id}`, data);
+        return res.data.data;
+    } catch (error) {
+        
+        return {
+            hasError: true
+        };
+    }
+};
 

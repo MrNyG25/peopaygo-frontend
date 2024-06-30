@@ -75,7 +75,7 @@ export default function TimesheetForm({employees}: any){
         payment_type: data.employee.payment_type.name, 
         amount: data.amount || '', 
         note: data.note || '',
-        employee_id: data.employee_id
+      
       });
     }
 
