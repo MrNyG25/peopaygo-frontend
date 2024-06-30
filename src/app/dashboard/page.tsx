@@ -1,8 +1,9 @@
+import { CustomDialog } from "@/components/CustomDialog";
 
 export default function page(){
   return (
     <>
-        dashboard main
+      Dashboard
     </>
   )
 }

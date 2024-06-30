@@ -1,16 +1,22 @@
 
-"use client"
-
 import { DataTable } from '@/components/DataTable'
-import { useTimesheets } from './timesheets.queries'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { PlusIcon } from '@radix-ui/react-icons'
 import { columns } from './columns'
+import { getTimesheets } from '@/app/actions/timesheets/timesheetsActions'
+import { PaymentFormPeriodDialog } from './components/PaymentPeriodFormDialog'
 
 
-export default function page() {
-  const { timesheets, timesheetsTotal } = useTimesheets()
+export default async function page() {
+  
+  const res = await getTimesheets();
+  const timesheets = res.data;
+  const timesheetsTotal = res.timesheetsTotal;
+
+  if(timesheets.length == 0){
+    return <p>Loading...</p>
+  }
 
   return (
     <section >
@@ -22,6 +28,7 @@ export default function page() {
             Add timesheet
           </Button>
         </Link>
+        <PaymentFormPeriodDialog timesheetsIds={timesheets.map((timesheet: any) => timesheet.id)} />
         <DataTable 
             columns={columns} 
             data={timesheets ?? []}

@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -15,21 +16,24 @@ import { useEffect, useState } from "react"
 interface Props{
   showDialogP: boolean;
 }
-export function CustomDialog({showDialogP} : Props) {
+export function CustomDialog() {
 
   
-  const [showDialog, setShowDialog] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
 
-  useEffect(() => {
+ /*  useEffect(() => {
 
     setShowDialog(showDialogP)
     
-  }, [])
+  }, []) */
   
   
   
   
   return (
+    <>
+   {/*  <Button onClick={() => setIsOpen(!isOpen)} variant="outline">Share</Button> */}
+
     <Dialog >
       <DialogTrigger  asChild>
         <Button variant="outline">Share</Button>
@@ -45,9 +49,10 @@ export function CustomDialog({showDialogP} : Props) {
          ff
         </div>
         <DialogFooter>
-          <Button onClick={() => setShowDialog(false)}>Save changes</Button>
+          <Button onClick={() => setIsOpen(false)}>Save changes</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
+    </>
   )
 }

@@ -16,7 +16,7 @@ import {
 import { currencyFormat } from '@/utils/currencyFormat'
 import { Pencil1Icon, TimerIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
-import { CustomDialog } from '@/components/CustomDialog'
+
 
 export type Timesheet = {
   id: number
@@ -26,6 +26,7 @@ export type Timesheet = {
   total: number
   timesheet_status: string
 }
+
 
 export const columns: ColumnDef<Timesheet>[] = [
   {
@@ -41,6 +42,10 @@ export const columns: ColumnDef<Timesheet>[] = [
         </Button>
       )
     }
+  },
+  {
+    accessorKey: 'employee.payment_type.name',
+    header: 'Payment type'
   },
   {
     accessorKey: 'amount',
@@ -68,35 +73,29 @@ export const columns: ColumnDef<Timesheet>[] = [
       const timesheet = row.original
       const id = row.original?.id
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant='ghost' className='h-8 w-8 p-0'>
-              <span className='sr-only'>Open menu</span>
-              <MoreHorizontal className='h-4 w-4' />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align='end'>
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <Link href={{
-                    pathname: '/dashboard/timesheets/timesheet-form',
-                    query: { id },
-                  }}>
-                <DropdownMenuItem>
-                  <Pencil1Icon className="mr-1 h-4 w-4"/> Edit
-                </DropdownMenuItem>
-            </Link>
-            
-            <Link href={{
-                    pathname: '/dashboard/timesheets/timesheet-form',
-                    query: { id },
-                  }}>
-                <DropdownMenuItem>
-                  <TimerIcon className="mr-1 h-4 w-4"/> Amount Edit
-                </DropdownMenuItem>
-            </Link>
-              
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant='ghost' className='h-8 w-8 p-0'>
+                <span className='sr-only'>Open menu</span>
+                <MoreHorizontal className='h-4 w-4' />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align='end'>
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <Link href={{
+                      pathname: '/dashboard/timesheets/timesheet-form',
+                      query: { id },
+                    }}>
+                  <DropdownMenuItem>
+                    <Pencil1Icon className="mr-1 h-4 w-4"/> Edit
+                  </DropdownMenuItem>
+              </Link>
+                
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+        </>
       )
     }
   }
