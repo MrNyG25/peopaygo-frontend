@@ -6,8 +6,7 @@ import { useTimesheets } from './timesheets.queries'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { PlusIcon } from '@radix-ui/react-icons'
-import { columns, useColumnTimesheets } from './columns'
-import { CustomDialog } from '@/components/CustomDialog'
+import { columns } from './columns'
 
 
 export default function page() {

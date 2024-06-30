@@ -25,7 +25,7 @@ export const useTimesheetsUpdateAmount = () =>{
 
     const mutation = useMutation({
         mutationFn: (data) => axios.put('http://127.0.0.1:8000/api/timesheets/3/updateAmount', data ),
-        onSuccess: (data) => {
+        /* onSuccess: (data) => {
             toast({
                 title: "Message",
                 description: (
@@ -40,7 +40,7 @@ export const useTimesheetsUpdateAmount = () =>{
                 <p>Cannot update the amount</p>
                 ),
             });
-        }
+        } */
     })
     
     return {updateAmount:mutation}

@@ -101,14 +101,15 @@ export default function Page() {
   };
 
   return (
-    <div className="w-full h-full flex justify-center mt-32">
+    <div className="w-full h-full flex-col justify-center my-10">
+      <h1 className='w-2/3 mb-6 text-3xl font-bold mx-auto'>Employee form</h1>
       <Form {...form}>
         <form 
           onSubmit={(e) => {
             e.preventDefault();
             form.handleSubmit(onSubmit)();
           }} 
-          className="w-2/3 space-y-6">
+          className="w-2/3 space-y-6 mx-auto">
           <FormField
             control={form.control}
             name="name"
