@@ -1,12 +1,9 @@
-"use client";
+"use client"
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { useSearchParams } from 'next/navigation'
-import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,10 +17,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { ButtonLoading } from "@/components/ButtonLoading";
-import { CustomerData } from "./interfaces/CustomerData";
-import { SaveCustomerResponse } from "./interfaces/SaveCustomerResponse";
 import { PlusIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
+import { createCustomer, getCustomerById } from "@/app/actions/customers/customerActions";
+import { useEffect, useState } from "react";
 
 const FormSchema = z.object({
   name: z.string().min(3, {
@@ -45,10 +42,12 @@ const FormSchema = z.object({
 
 export default function Page() {
   const router = useRouter()
+  const { toast } = useToast();
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
 
-  const { toast } = useToast();
+  const [isSaving, setIsSaving] = useState<boolean>(false)
+
 
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -62,47 +61,47 @@ export default function Page() {
   });
 
   useEffect(() => {
+  
     if (id) {
-      axios.get(`http://127.0.0.1:8000/api/customers/${id}`).then((response) => {
-        form.reset({
-          name: response.data.data.name,
-          email: response.data.data.user.email,
-          password: "", // reset passwords for security
-          password_confirmation: ""
-        });
-      });
+      getCustomerByIdFn(id);
     }
   }, [id]);
 
-  const mutation = useMutation({
-    mutationFn: (data: CustomerData): Promise<SaveCustomerResponse> => {
-      if (id) {
-        return axios.put(`http://127.0.0.1:8000/api/customers/${id}`, data);
-      }
-      return axios.post('http://127.0.0.1:8000/api/customers', data);
-    },
-    onSuccess: (data) => {
+  const getCustomerByIdFn = async (id: any) => {
+    let data =  await getCustomerById(id)
+    form.reset({
+      name: data.name, 
+      email: data.user.email, 
+    });
+  }
+
+
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    setIsSaving(true);
+
+    let res = await createCustomer(data);
+
+    if(res?.hasError){
       toast({
-        title: "Message",
-        description: (
-          <p>{id ? "Customer updated successfully" : "Customer created successfully"}</p>
-        ),
-      });
-      router.push('/dashboard/customers');
-    },
-    onError: (error) => {
-      toast({
+        variant: 'destructive',
         title: "Message",
         description: (
           <p>Cannot {id ? "update" : "create"} customer</p>
         ),
       });
+      setIsSaving(false);
+      return; 
     }
-  });
 
+    toast({
+      title: "Message",
+      description: (
+        <p>{id ? "Customer updated successfully" : "Customer created successfully"}</p>
+      ),
+    });
 
-  const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    mutation.mutate({...data});
+    setIsSaving(false);
+    router.push('/dashboard/customers');
   };
 
   return (
@@ -122,7 +121,7 @@ export default function Page() {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input type="text" placeholder="Name" {...field} />
+                  <Input type="text" placeholder="Pepe" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -135,7 +134,7 @@ export default function Page() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input placeholder="test@mail.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -167,7 +166,7 @@ export default function Page() {
               </FormItem>
             )}
           />
-          {mutation.isPending ? <ButtonLoading /> : (
+          {isSaving ? <ButtonLoading /> : (
             <Button type="submit">
               <PlusIcon className="mr-1 h-4 w-4" />
               {id ? "Update customer" : "Save customer"}

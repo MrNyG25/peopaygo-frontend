@@ -11,7 +11,7 @@ import { Timesheet, TimesheetResponse } from "./interfaces/TimesheetResponse";
 
 
 const fetchEmployees = async ()  => {
-    let res = await axios.get<EmployeesResponse>('http://127.0.0.1:8000/api/customers/1/employees');
+    let res = await axios.get<EmployeesResponse>('http://127.0.0.1:8000/api/employees');
     return res.data.data;
 };
 

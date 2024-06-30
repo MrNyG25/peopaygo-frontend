@@ -43,6 +43,7 @@ export default function page() {
     },
     onError: (error) => {
       toast({
+        variant: 'destructive',
         title: "Message",
         description: (
           <p>Email or password invalid</p>

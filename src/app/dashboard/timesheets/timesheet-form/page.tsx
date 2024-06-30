@@ -25,6 +25,7 @@ import { TimesheetData } from "./interfaces/TimesheetData";
 import { SaveTimesheetResponse } from "./interfaces/SaveTimesheetResponse";
 import { useEmployees, useSaveTimesheet, useTimesheet } from "./timesheet-form.queries";
 import { Combobox } from "@/components/Combobox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 // Define the form validation schema using Zod
 const FormSchema = z.object({
@@ -70,6 +71,18 @@ export default function Page() {
     }
   }, [timesheet]);
 
+  useEffect(() => {
+    const subscription = form.watch((value, { name, type }) => {
+      if(name == "employee_id"){
+        let employee = employees?.find(employee => employee.id == value.employee_id);
+        console.log(employee)
+        console.log(value, name, type)
+      }
+    })
+    return () => subscription.unsubscribe()
+  }, [form.watch])
+  
+
   // Handle form submission
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
     console.log(data)
@@ -92,20 +105,20 @@ export default function Page() {
             render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel>Employee</FormLabel>
-                <Combobox 
-                  generalName="Employee"
-                  options={
-                    isSuccessEmployees ? 
-                    employees!.map(e => {
-                      return {value: e.id.toString(), label: e.name }
-                    }) : 
-                    []
-                  }
-                  onSelect={(value: any) => {
-                    form.setValue("employee_id", value)
-                    form.setValue("payment_type", "value")
-                  }}
-                />
+                  <Select onValueChange={field.onChange}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select an employee" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {
+                       isSuccessEmployees && employees?.map(employee => (
+                          <SelectItem key={employee.id} value={employee.id.toString()}>{employee.name}</SelectItem>
+                        ))
+                      }
+                    </SelectContent>
+                  </Select>
                 <FormMessage />
               </FormItem>
             )}
@@ -118,7 +131,7 @@ export default function Page() {
               <FormItem>
                 <FormLabel>Payment type</FormLabel>
                 <FormControl>
-                  <Input disabled={true} type="number" {...field} />
+                  <Input disabled={true}  {...field}  value={"hours"}/>
                 </FormControl>
                 <FormMessage />
               </FormItem>

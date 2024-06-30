@@ -13,7 +13,7 @@ export default function page() {
   const { timesheets, timesheetsTotal } = useTimesheets()
 
   return (
-    <section className='py-10'>
+    <section >
       <div className='container'>
         <h1 className='mb-6 text-3xl font-bold'>All timesheets</h1>
         <Link href={'/dashboard/timesheets/timesheet-form'}>

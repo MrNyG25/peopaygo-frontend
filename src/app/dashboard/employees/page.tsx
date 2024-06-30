@@ -15,7 +15,7 @@ export default function page() {
   
 
   return (
-    <section className='py-10'>
+    <section>
       <div className='container'>
         <h1 className='mb-6 text-3xl font-bold'>All employees</h1>
         <Link href={'/dashboard/employees/employee-form'}>

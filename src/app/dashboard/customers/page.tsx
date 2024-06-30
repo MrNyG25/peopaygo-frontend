@@ -1,33 +1,18 @@
-
-"use client"
-
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
 import { CustomerResponse } from "./interfaces/CustomersResponse";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Pencil1Icon , PlusIcon} from "@radix-ui/react-icons";
-import { useCustomers } from "./customers.queries";
+import {  PlusIcon} from "@radix-ui/react-icons";
 import { columns } from "./columns";
 import { DataTable } from "@/components/DataTable";
+import { getCustomers } from "@/app/actions/customers/customerActions";
 ///dashboard/customers/customer-form
 
-export default function page() {
+export default async function page() {
 
-  const { customers } = useCustomers();
+  const customers = await getCustomers();
 
   return (
-    <section className='py-10'>
+    <section >
     <div className='container'>
       <h1 className='mb-6 text-3xl font-bold'>All customers</h1>
       <Link href={'/dashboard/customers/customer-form'}>

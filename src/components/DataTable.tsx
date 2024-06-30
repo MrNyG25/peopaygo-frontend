@@ -168,7 +168,7 @@ export function DataTable<TData, TValue>({
            showTotalFooter && <TableFooter>
               <TableRow>
                 <TableCell colSpan={colSpanTotalFooter}>Total</TableCell>
-                <TableCell className="text-right">{currencyFormat(totalFooterValue!)}</TableCell>
+                <TableCell >{currencyFormat(totalFooterValue!)}</TableCell>
               </TableRow>
             </TableFooter>
           }
