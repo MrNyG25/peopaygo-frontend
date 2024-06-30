@@ -112,7 +112,7 @@ export default function Page() {
 
   return (
     <div className="w-full h-full flex-col justify-center my-10">
-      <h1 className='w-2/3 mb-6 text-3xl font-bold mx-auto'>Employee form</h1>
+      <h1 className='w-2/3 mb-6 text-3xl font-bold mx-auto'>Customer form</h1>
       <Form {...form}>
         <form 
           onSubmit={(e) => {

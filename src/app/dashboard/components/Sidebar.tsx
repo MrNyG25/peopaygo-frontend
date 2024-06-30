@@ -4,12 +4,26 @@
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { AvatarIcon, FileIcon, PersonIcon } from '@radix-ui/react-icons'
-import { usePathname } from "next/navigation";
+import { AvatarIcon, ExitIcon, FileIcon, PersonIcon } from '@radix-ui/react-icons'
+import { usePathname, useRouter } from "next/navigation";
+import useAuthStore from "@/app/stores/AuthStore";
+import { deleteCookie } from "cookies-next";
   
 export function Sidebar() {
   const pathname = usePathname()
-  
+  const router = useRouter();
+  const user = useAuthStore((state) => state.user)
+
+
+  const handleLogout = () => {
+    deleteCookie(
+      'userData' 
+    );
+    router.push('/login');
+  }
+
+  let ROLE = user?.user_role;
+
   return (
     <div className={"pb-12"}>
       <div className="space-y-4 py-4">
@@ -48,12 +62,17 @@ export function Sidebar() {
                 Timesheets
               </Button>
             </Link>
-            <Button variant="ghost" size="sm" className="w-full justify-start">
-              Radio
+            {
+              ROLE == "customer" && <Button variant="ghost" size="sm" className="w-full justify-start">
+                Radio
+              </Button>
+            }
+            <Button onClick={handleLogout} variant="ghost" size="sm" className="w-full justify-start">
+              <ExitIcon className="mr-2 h-4 w-4"/>
+              Logout
             </Button>
           </div>
         </div>
-
       </div>
     </div>
   )

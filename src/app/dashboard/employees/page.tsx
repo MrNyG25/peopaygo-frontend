@@ -1,19 +1,32 @@
+"use client"
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PlusIcon } from "@radix-ui/react-icons";
 import { DataTable } from "@/components/DataTable";
 import { columns } from "./columns";
-import { getEmployeesByClientId } from "@/app/actions/employees/employeesActions";
+import { getEmployeesByCustomerId } from "@/app/actions/employees/employeesActions";
+import { useEffect, useState } from "react";
+import useAuthStore from "@/app/stores/AuthStore";
 
 
-export default async function page() {
-
-  let employees = await getEmployeesByClientId(1);
+export default function page() {
   
-  if(!employees){
-    return (<p>Loading...</p>)
-  }
+  const userData = useAuthStore((state) => state.user)
+  const [employees, setEmployees] = useState([])
 
+  useEffect(() => {
+    getEmployeesByCustomerIdFn()
+  }, [])
+  
+  const getEmployeesByCustomerIdFn = async () => {
+    console.log(userData)
+    if(userData){
+      let customerId = userData?.user?.id;
+      let employeesRes =  await getEmployeesByCustomerId(customerId);
+      setEmployees(employeesRes)
+    }
+  }
+  
   return (
     <section>
       <div className='container'>

@@ -8,11 +8,9 @@ import { getCustomers } from "@/app/actions/customers/customerActions";
 
 export default async function Page() {
   const res = await getCustomers();
-  console.log(res)
+
   const customers = res.data;
-  if(customers.length == 0){
-    return <p>Loading...</p>
-  }
+
 
   return (
     <section>

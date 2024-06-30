@@ -4,15 +4,20 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { PlusIcon } from '@radix-ui/react-icons'
 import { columns } from './columns'
-import { getTimesheets } from '@/app/actions/timesheets/timesheetsActions'
+import { getTimesheetsByCustomerId } from '@/app/actions/timesheets/timesheetsActions'
 import { PaymentFormPeriodDialog } from './components/PaymentPeriodFormDialog'
+import { getUserDataServer } from '@/utils/getUserDataServer'
 
 
 export default async function page() {
   
-  const res = await getTimesheets();
+  let userData = getUserDataServer();
+  
+  const res = await getTimesheetsByCustomerId(userData.user_id);
+
   const timesheets = res.data;
   const timesheetsTotal = res.timesheetsTotal;
+
 
   return (
     <section >

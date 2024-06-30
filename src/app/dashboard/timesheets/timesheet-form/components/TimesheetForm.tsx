@@ -22,19 +22,20 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { createTimesheet, getTimesheetById, updateTimesheet } from "@/app/actions/timesheets/timesheetsActions";
 import { Employee } from "../interfaces/EmployeesResponse";
+import useAuthStore from "@/app/stores/AuthStore";
 
 
 // Define the form validation schema using Zod
 const FormSchema = z.object({
-    employee_id: z.string({
-        message: "Employee ID must be a valid number.",
+    employee_id: z.string().min(1, {
+      message: "Employee is required.",
     }),
     payment_type: z.string(),
     amount: z.string({
         message: "Amount must be a valid number.",
     }),
     note: z.string().optional(),
-}).refine((data) => !(Number(data.amount) < 12 && data.payment_type == "hour"), {
+}).refine((data) => !(Number(data.amount) < 12 && data?.payment_type == "hour"), {
   message: "All employees in the state of Florida must be paid min $12",
   path: ["amount"],
 });
@@ -46,25 +47,33 @@ export default function TimesheetForm({employees}: any){
     const searchParams = useSearchParams()
     const id = searchParams.get('id')
 
+    const userData = useAuthStore((state) => state.user)
+
     const [isSaving, setIsSaving] = useState<boolean>(false)
     const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null)
 
     const form = useForm<z.infer<typeof FormSchema>>({
       resolver: zodResolver(FormSchema),
       defaultValues: {
-        employee_id: undefined,
+        employee_id: "",
         payment_type: "",
         amount: "",
         note: "",
       },
     });
+    
+    useEffect(() => {
+      console.log({employees})
+    }, [])
+    
 
     useEffect(() => {
       if (id) {
         getCustomerByIdFn(id);
       }
     }, [id]);
-  
+
+
     const getCustomerByIdFn = async (id: any) => {
       let data =  await getTimesheetById(id)
       setSelectedEmployee({
@@ -86,23 +95,25 @@ export default function TimesheetForm({employees}: any){
     
   
     useEffect(() => {
+      
       const subscription = form.watch((value, { name }) => {
-        if(name == "employee_id"){
-          let employee = employees?.find((employee: any) => employee.id == value.employee_id);
+        if(name == "employee_id" && value.employee_id){
+
+          let employee = employees?.find((employee: any) => employee?.id == value?.employee_id);
+
           setSelectedEmployee({
-            id: employee.id,
-            name: employee.name,
+            id: employee?.id,
+            name: employee?.name,
           })
 
           let {amount} = form.getValues()
           let amountNew = amount || '';
-          if(employee.payment_type.name == "salary"){
+          if(employee?.payment_type.name == "salary"){
             amountNew = '';
           }
-
           form.reset({
             ...value,
-            payment_type: employee.payment_type.name,
+            payment_type: employee?.payment_type.name,
             amount: amountNew
           })
         }
@@ -162,14 +173,16 @@ export default function TimesheetForm({employees}: any){
               <FormItem className="flex flex-col">
                 <FormLabel>Employee</FormLabel>
                   <Select 
-                   value={field.value}
+                   value={field.value.toString()}
                   onValueChange={(value) => {
                     field.onChange(value);
                     let employee = employees?.find((employee: any) => employee.id == value);
+     
                     setSelectedEmployee({
                       id: employee.id,
                       name: employee.name,
                     })
+
                     field.onChange(value);
                   }}>
                     <FormControl>

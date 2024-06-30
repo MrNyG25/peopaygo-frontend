@@ -21,6 +21,7 @@ import { useMutation } from "@tanstack/react-query";
 import { ButtonLoading } from "@/components/ButtonLoading";
 import { LoginData } from "./interfaces/LoginData";
 import { LoginResponse } from "./interfaces/LoginResponse";
+import { setCookie } from 'cookies-next';
 
 const FormSchema = z.object({
   email: z.string().email({
@@ -33,12 +34,18 @@ const FormSchema = z.object({
 
 export default function page() {
 
+  const router = useRouter();
+  const { toast } = useToast();
+
   const mutation = useMutation({
     mutationFn: (data: LoginData): Promise<LoginResponse> => {
       return axios.post('http://127.0.0.1:8000/api/login', data)
     },
     onSuccess: (data) => {
-      localStorage.setItem('token', JSON.stringify(data!.data));
+      setCookie(
+        'userData', 
+        JSON.stringify(data!.data)
+      );
       router.push('/dashboard');
     },
     onError: (error) => {
@@ -53,13 +60,11 @@ export default function page() {
   })
 
 
-  const router = useRouter();
-  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      email: "conn.vada@example.net",
+      email: "evie.russel@example.net",
       password: "password123"
     },
   });

@@ -1,6 +1,7 @@
-import { CustomDialog } from "@/components/CustomDialog";
+import { cookies } from 'next/headers'
 
 export default function page(){
+
   return (
     <>
       Dashboard

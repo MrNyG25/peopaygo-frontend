@@ -1,11 +1,14 @@
-import React from "react";
+"use client"
+
 import { Sidebar } from "./components/Sidebar";
+import useAuthStore from "../stores/AuthStore";
 
 export default function page({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <>
       <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">

@@ -38,6 +38,10 @@ export const columns: ColumnDef<Employee>[] = [
   {
     accessorKey: 'pay_rate',
     header: 'Pay rate',
+    cell: ({ row }) => {
+      const formatted = currencyFormat(row.getValue('pay_rate'))
+      return <div className='font-medium'>{formatted}</div>
+    }
   },
   {
     accessorKey: 'payment_type.name',

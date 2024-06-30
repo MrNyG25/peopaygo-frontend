@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const getTimesheets = async ()  => {
+export const getTimesheetsByCustomerId = async (customerId: number)  => {
     try {
-        let res = await axios.get<any>('http://127.0.0.1:8000/api/customers/1/timesheets');
+        let res = await axios.get<any>(`http://127.0.0.1:8000/api/customers/${customerId}/timesheets`);
         return res.data;
     } catch (error) {
         return {

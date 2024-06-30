@@ -22,6 +22,7 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { createEmployee, getEmployeeById, updateEmployee } from "@/app/actions/employees/employeesActions";
 import { PaymentType } from "../interfaces/PaymentType";
+import useAuthStore from "@/app/stores/AuthStore";
 
 const FormSchema = z.object({
   name: z.string().min(3, {
@@ -36,12 +37,17 @@ const FormSchema = z.object({
 }).refine((data) => !(Number(data.pay_rate) < 480 && data.payment_type_id == "2"), {
   message: "All employees in the state of Florida must be paid min $480 per check",
   path: ["pay_rate"],
-});
+}).refine((data) => !(Number(data.pay_rate) < 12 && data.payment_type_id == "1"), {
+  message: "All employees in the state of Florida must be paid min $12 per hour",
+  path: ["pay_rate"],
+})
 
 export default function EmployeeForm({paymentTypes}: any) {
 
 
-    const router = useRouter();
+  const userData = useAuthStore((state) => state.user)
+
+  const router = useRouter();
 
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
@@ -89,11 +95,12 @@ export default function EmployeeForm({paymentTypes}: any) {
     console.log(data)
     setIsSaving(true);
 
-    let res: any = null;
+    let customerId = userData?.user?.id;
 
+    let res: any = null;
     let dataObj = {
         ...data,
-        customer_id: 1
+        customer_id: customerId
     }
     if(id){
       res = await updateEmployee(+id!,dataObj);
@@ -150,7 +157,7 @@ export default function EmployeeForm({paymentTypes}: any) {
         name="payment_type_id"
         render={({ field }) => (
             <FormItem className="flex flex-col">
-                <FormLabel>Employee</FormLabel>
+                <FormLabel>Payment type</FormLabel>
                   <Select 
                     value={field.value?.toString()}
                   onValueChange={(value) => {
