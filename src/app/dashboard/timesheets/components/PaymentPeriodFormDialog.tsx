@@ -14,10 +14,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PlusIcon } from "@radix-ui/react-icons";
+import { PlusIcon, FileTextIcon } from "@radix-ui/react-icons";
 
 import {
   Form,
@@ -105,17 +104,17 @@ export function PaymentFormPeriodDialog({timesheetsIds}: Props) {
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline">
+          <Button className="ml-3" variant="outline">
             {" "}
-            <PlusIcon className="mr-1 h-4 w-4" />
-            Share
+            <FileTextIcon className="mr-1 h-4 w-4" />
+            Generate checke
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Create check</DialogTitle>
+            <DialogTitle>Create checke</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
+              All timesheets will be send to pay provider
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>

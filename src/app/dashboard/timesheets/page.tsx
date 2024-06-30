@@ -14,17 +14,13 @@ export default async function page() {
   const timesheets = res.data;
   const timesheetsTotal = res.timesheetsTotal;
 
-  if(timesheets.length == 0){
-    return <p>Loading...</p>
-  }
-
   return (
     <section >
       <div className='container'>
         <h1 className='mb-6 text-3xl font-bold'>All timesheets</h1>
         <Link href={'/dashboard/timesheets/timesheet-form'}>
           <Button >
-            <PlusIcon className="mr-1 h-4 w-4"/>
+            <PlusIcon className="mr-3 h-4 w-4"/>
             Add timesheet
           </Button>
         </Link>
