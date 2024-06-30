@@ -7,15 +7,20 @@ import axios from "axios";
 
 const fetchTimesheets = async ()  => {
     let res = await axios.get<TimesheetsResponse>('http://127.0.0.1:8000/api/customers/1/timesheets');
-    return res.data.data;
+    return res.data;
 };
 
 export const useTimesheets = () =>{
-    const {  data,refetch,isLoading} = useQuery<Timesheet[]>({
+    const {  data,refetch,isLoading} = useQuery<TimesheetsResponse>({
         queryKey: ['timesheets'],
         queryFn: fetchTimesheets
     })
-    return {timesheets:data,refetch,isLoading}
+
+    return {
+        timesheets: data?.data, 
+        timesheetsTotal: data?.timesheetsTotal, 
+        refetch,isLoading
+    }
 }
 
 

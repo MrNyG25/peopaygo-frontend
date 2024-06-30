@@ -10,7 +10,7 @@ import { columns } from './columns'
 
 
 export default function page() {
-  const { timesheets } = useTimesheets()
+  const { timesheets, timesheetsTotal } = useTimesheets()
 
   return (
     <section className='py-10'>
@@ -27,7 +27,7 @@ export default function page() {
             data={timesheets ?? []}
             showTotalFooter={true}
             colSpanTotalFooter={3}
-            totalFooterValue={177777}
+            totalFooterValue={timesheetsTotal}
         />
       </div>
     </section>

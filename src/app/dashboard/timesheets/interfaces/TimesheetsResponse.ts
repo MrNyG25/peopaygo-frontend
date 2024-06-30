@@ -1,5 +1,6 @@
 export interface TimesheetsResponse {
     data: Timesheet[];
+    timesheetsTotal: number;
 }
 
 export interface Timesheet {
