@@ -34,7 +34,7 @@ export default async function page() {
             columns={columns} 
             data={timesheets ?? []}
             showTotalFooter={true}
-            colSpanTotalFooter={3}
+            colSpanTotalFooter={4}
             totalFooterValue={timesheetsTotal}
         />
       </div>

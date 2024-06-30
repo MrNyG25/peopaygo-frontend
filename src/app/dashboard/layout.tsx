@@ -1,7 +1,6 @@
 "use client"
 
 import { Sidebar } from "./components/Sidebar";
-import useAuthStore from "../stores/AuthStore";
 
 export default function page({
   children,

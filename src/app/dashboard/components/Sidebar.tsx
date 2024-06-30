@@ -6,14 +6,14 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { AvatarIcon, ExitIcon, FileIcon, PersonIcon } from '@radix-ui/react-icons'
 import { usePathname, useRouter } from "next/navigation";
-import useAuthStore from "@/app/stores/AuthStore";
 import { deleteCookie } from "cookies-next";
+import { getUserDataClient } from "@/utils/getUserDataClient";
   
 export function Sidebar() {
   const pathname = usePathname()
   const router = useRouter();
-  const user = useAuthStore((state) => state.user)
 
+  const userData = getUserDataClient();
 
   const handleLogout = () => {
     deleteCookie(
@@ -22,7 +22,12 @@ export function Sidebar() {
     router.push('/login');
   }
 
-  let ROLE = user?.user_role;
+
+  let ROLE =  userData?.role_name;
+
+  if(!userData){
+    return <p>Loading...</p>
+  }
 
   return (
     <div className={"pb-12"}>
@@ -42,31 +47,36 @@ export function Sidebar() {
                   Customers
               </Button>
             </Link>
-            <Link href="/dashboard/employees">
-              <Button
-                  variant={pathname == "/dashboard/employees" ? "secondary" : "ghost"}
-                  size="sm"
-                  className="w-full justify-start"
-              >
-                <PersonIcon className="mr-2 h-4 w-4"/>
-                  Employees
-              </Button>
-            </Link>
-            <Link href="/dashboard/timesheets">
-              <Button 
-                variant={pathname == "/dashboard/timesheets" ? "secondary" : "ghost"}
-                size="sm" 
-                className="w-full justify-start"
-              >
-                <FileIcon className="mr-2 h-4 w-4"/>
-                Timesheets
-              </Button>
-            </Link>
             {
-              ROLE == "customer" && <Button variant="ghost" size="sm" className="w-full justify-start">
-                Radio
-              </Button>
+               ROLE == "customer" ?
+                <>
+                <Link href="/dashboard/employees">
+                  <Button
+                      variant={pathname == "/dashboard/employees" ? "secondary" : "ghost"}
+                      size="sm"
+                      className="w-full justify-start"
+                  >
+                    <PersonIcon className="mr-2 h-4 w-4"/>
+                      Employees
+                  </Button>
+                </Link>
+                <Link href="/dashboard/timesheets">
+                  <Button 
+                    variant={pathname == "/dashboard/timesheets" ? "secondary" : "ghost"}
+                    size="sm" 
+                    className="w-full justify-start"
+                  >
+                    <FileIcon className="mr-2 h-4 w-4"/>
+                    Timesheets
+                  </Button>
+                </Link>
+                </>
+             : null
             }
+            
+
+  
+
             <Button onClick={handleLogout} variant="ghost" size="sm" className="w-full justify-start">
               <ExitIcon className="mr-2 h-4 w-4"/>
               Logout

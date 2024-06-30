@@ -22,7 +22,6 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { createTimesheet, getTimesheetById, updateTimesheet } from "@/app/actions/timesheets/timesheetsActions";
 import { Employee } from "../interfaces/EmployeesResponse";
-import useAuthStore from "@/app/stores/AuthStore";
 
 
 // Define the form validation schema using Zod
@@ -47,7 +46,6 @@ export default function TimesheetForm({employees}: any){
     const searchParams = useSearchParams()
     const id = searchParams.get('id')
 
-    const userData = useAuthStore((state) => state.user)
 
     const [isSaving, setIsSaving] = useState<boolean>(false)
     const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null)

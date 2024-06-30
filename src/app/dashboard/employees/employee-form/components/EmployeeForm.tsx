@@ -22,7 +22,7 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { createEmployee, getEmployeeById, updateEmployee } from "@/app/actions/employees/employeesActions";
 import { PaymentType } from "../interfaces/PaymentType";
-import useAuthStore from "@/app/stores/AuthStore";
+import { getUserDataClient } from "@/utils/getUserDataClient";
 
 const FormSchema = z.object({
   name: z.string().min(3, {
@@ -45,7 +45,6 @@ const FormSchema = z.object({
 export default function EmployeeForm({paymentTypes}: any) {
 
 
-  const userData = useAuthStore((state) => state.user)
 
   const router = useRouter();
 
@@ -57,6 +56,7 @@ export default function EmployeeForm({paymentTypes}: any) {
 
 
   const { toast } = useToast();
+  const userData = getUserDataClient();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -95,12 +95,11 @@ export default function EmployeeForm({paymentTypes}: any) {
     console.log(data)
     setIsSaving(true);
 
-    let customerId = userData?.user?.id;
 
     let res: any = null;
     let dataObj = {
         ...data,
-        customer_id: customerId
+        customer_id: userData.user_id
     }
     if(id){
       res = await updateEmployee(+id!,dataObj);

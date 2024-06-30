@@ -6,10 +6,9 @@ import { getUserDataServer } from "@/utils/getUserDataServer";
 
 export default async function Page() {
   
-  const userData = cookies().get('userData').value
-  console.log(userData)
-
-  const res = await getEmployeesByCustomerId(7);
+  let userData = getUserDataServer();
+    
+  const res = await getEmployeesByCustomerId(userData.user_id);
 
   const employees = res;
   
