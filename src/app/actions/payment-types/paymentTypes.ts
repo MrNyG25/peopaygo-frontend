@@ -1,9 +1,9 @@
-import axios from "axios";
-const API_URL = process.env.apiUrl;
+import axiosWrapper from "@/utils/axiosWrapper";
+
 
 export const getPaymentTypes = async ()  => {
     try {
-        let res = await axios.get(`${API_URL}payment_types`)
+        let res = await axiosWrapper.get(`payment_types`)
         return res.data.data;
     } catch (error) {
         return {

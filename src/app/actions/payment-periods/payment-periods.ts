@@ -1,9 +1,9 @@
-import axios from "axios";
-const API_URL = process.env.apiUrl;
+import axiosWrapper from "@/utils/axiosWrapper";
+
 
 export const createPaymentPeriod = async (data: any)  => {
     try {
-        let res = await axios.post(`${API_URL}payment_periods`, data )
+        let res = await axiosWrapper.post(`payment_periods`, data )
         return res.data.data;
     } catch (error) {
         return {
@@ -15,7 +15,7 @@ export const createPaymentPeriod = async (data: any)  => {
 
 export const getPaymentPeriods= async ()  => {
     try {
-        let res = await axios.get(`${API_URL}payment_periods`,  )
+        let res = await axiosWrapper.get(`payment_periods`,  )
         return res.data;
     } catch (error) {
         return {
@@ -27,7 +27,7 @@ export const getPaymentPeriods= async ()  => {
 
 export const getPaymentPeriodsByCustomerId = async (customerId)  => {
     try {
-        let res = await axios.get(`${API_URL}customers/${customerId}/payment_periods`,  )
+        let res = await axiosWrapper.get(`customers/${customerId}/payment_periods`,  )
         return res.data;
     } catch (error) {
         return {
@@ -39,7 +39,7 @@ export const getPaymentPeriodsByCustomerId = async (customerId)  => {
 
 export const getTimesheetsByPaymentPeriodId = async (paymentPeriodId)  => {
     try {
-        let res = await axios.get(`${API_URL}payment_periods/${paymentPeriodId}/timesheets`,  )
+        let res = await axiosWrapper.get(`payment_periods/${paymentPeriodId}/timesheets`,  )
         return res.data;
     } catch (error) {
         return {

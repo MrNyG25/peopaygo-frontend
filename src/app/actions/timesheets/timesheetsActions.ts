@@ -1,9 +1,9 @@
-import axios from "axios";
-const API_URL = process.env.apiUrl;
+import axiosWrapper from "@/utils/axiosWrapper";
+
 
 export const getTimesheetsByCustomerId = async (customerId: number)  => {
     try {
-        let res = await axios.get<any>(`${API_URL}customers/${customerId}/timesheets`);
+        let res = await axiosWrapper.get<any>(`customers/${customerId}/timesheets`);
         return res.data;
     } catch (error) {
         return {
@@ -15,7 +15,7 @@ export const getTimesheetsByCustomerId = async (customerId: number)  => {
 
 export const getTimesheetById = async (timesheetId: any)  => {
     try {
-        let res = await axios.get<any>(`${API_URL}timesheets/${timesheetId}`);
+        let res = await axiosWrapper.get<any>(`timesheets/${timesheetId}`);
         return res.data.data;
     } catch (error) {
         return {
@@ -27,7 +27,7 @@ export const getTimesheetById = async (timesheetId: any)  => {
 
 export const createTimesheet = async (data: any)  => {
     try {
-        let res = await axios.post(`${API_URL}timesheets`, data )
+        let res = await axiosWrapper.post(`timesheets`, data )
         return res.data.data;
     } catch (error) {
         return {
@@ -39,7 +39,7 @@ export const createTimesheet = async (data: any)  => {
 
 export const updateTimesheetAmount = async (timesheetId: number, data: any)  => {
     try {
-        let res = await axios.post(`${API_URL}timesheets/${timesheetId}/updateAmount`, data )
+        let res = await axiosWrapper.post(`timesheets/${timesheetId}/updateAmount`, data )
         return res.data.data;
     } catch (error) {
         return {
@@ -51,7 +51,7 @@ export const updateTimesheetAmount = async (timesheetId: number, data: any)  => 
 
 export const updateTimesheet = async (timesheetId: number, data: any)  => {
     try {
-        let res = await axios.put(`${API_URL}timesheets/${timesheetId}`, data )
+        let res = await axiosWrapper.put(`timesheets/${timesheetId}`, data )
         return res.data.data;
     } catch (error) {
         return {

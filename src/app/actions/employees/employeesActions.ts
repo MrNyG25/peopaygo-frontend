@@ -1,9 +1,9 @@
-import axios from "axios";
-const API_URL = process.env.apiUrl;
+import axiosWrapper from "@/utils/axiosWrapper";
+
 
 export const getEmployeesByCustomerId = async (clientId: number)  => {
     try {
-        let res = await axios.get<any>(`${API_URL}customers/${clientId}/employees`, );
+        let res = await axiosWrapper.get<any>(`customers/${clientId}/employees`, );
         return res.data;
     } catch (error) {
         return {
@@ -14,7 +14,7 @@ export const getEmployeesByCustomerId = async (clientId: number)  => {
 
 export const getEmployeeById = async (employeeId: number)  => {
     try {
-        let res = await axios.get(`${API_URL}employees/${employeeId}`);
+        let res = await axiosWrapper.get(`employees/${employeeId}`);
         return res.data.data;
     } catch (error) {
         return {
@@ -25,7 +25,7 @@ export const getEmployeeById = async (employeeId: number)  => {
 
 export const createEmployee = async (data: any)  => {
     try {
-        let res = await axios.post(`${API_URL}employees`, data )
+        let res = await axiosWrapper.post(`employees`, data )
         return res.data.data;
     } catch (error) {
         return {
@@ -37,7 +37,7 @@ export const createEmployee = async (data: any)  => {
 
 export const updateEmployee = async (employeeId: number, data: any)  => {
     try {
-        let res = await axios.put(`${API_URL}employees/${employeeId}`, data);
+        let res = await axiosWrapper.put(`employees/${employeeId}`, data);
         return res.data.data;
     } catch (error) {
         return {
@@ -50,7 +50,7 @@ export const updateEmployee = async (employeeId: number, data: any)  => {
 
 export const deleteEmployee = async (employeeId: number)  => {
     try {
-        let res = await axios.delete(`${API_URL}employees/${employeeId}`);
+        let res = await axiosWrapper.delete(`employees/${employeeId}`);
         return res.data.data;
     } catch (error) {
         return {

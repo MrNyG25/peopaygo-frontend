@@ -55,7 +55,6 @@ export const columns: ColumnDef<Timesheet>[] = [
     id: 'actions',
     header: 'Actions',
     cell: ({ row }) => {
-      console.log(row)
       const timesheet = row.original
       const id = row.original?.id
       return (

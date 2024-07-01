@@ -1,9 +1,9 @@
-import axios from "axios";
-const API_URL = process.env.apiUrl;
+import axiosWrapper from "@/utils/axiosWrapper";
+
 
 export const createCustomer = async (data: any)  => {
     try {
-        let res = await axios.post<any>(`${API_URL}customers`, data)
+        let res = await axiosWrapper.post<any>(`customers`, data)
         return res.data;
     } catch (error) {
         return {
@@ -15,7 +15,7 @@ export const createCustomer = async (data: any)  => {
 
 export const getCustomers = async ()  => {
     try {
-        let res = await axios.get<any>(`${API_URL}customers`);
+        let res = await axiosWrapper.get<any>(`customers`);
         return res.data;
     } catch (error) {
         
@@ -28,7 +28,7 @@ export const getCustomers = async ()  => {
 
 export const getCustomerById = async (id: any)  => {
     try {
-        let res = await axios.get<any>(`${API_URL}customers/${id}`);
+        let res = await axiosWrapper.get<any>(`customers/${id}`);
         return res.data.data;
     } catch (error) {
         
@@ -40,7 +40,7 @@ export const getCustomerById = async (id: any)  => {
 
 export const updateCustomer = async (id: any, data: any)  => {
     try {
-        let res = await axios.put<any>(`http://127.0.0.1:8000/api/customers/${id}`, data);
+        let res = await axiosWrapper.put<any>(`/customers/${id}`, data);
         return res.data.data;
     } catch (error) {
         
