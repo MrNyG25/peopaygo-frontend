@@ -1,24 +1,11 @@
-import axiosWrapper from "@/utils/axiosWrapper";
+import { axiosWrapperClient } from "@/utils/axiosWrapperClient";
 
 
 export const createCustomer = async (data: any)  => {
     try {
-        let res = await axiosWrapper.post<any>(`customers`, data)
+        let res = await axiosWrapperClient.post<any>(`customers`, data)
         return res.data;
     } catch (error) {
-        return {
-            hasError: true
-        };
-    }
-};
-
-
-export const getCustomers = async ()  => {
-    try {
-        let res = await axiosWrapper.get<any>(`customers`);
-        return res.data;
-    } catch (error) {
-        
         return {
             hasError: true
         };
@@ -28,7 +15,7 @@ export const getCustomers = async ()  => {
 
 export const getCustomerById = async (id: any)  => {
     try {
-        let res = await axiosWrapper.get<any>(`customers/${id}`);
+        let res = await axiosWrapperClient.get<any>(`customers/${id}`);
         return res.data.data;
     } catch (error) {
         
@@ -40,12 +27,13 @@ export const getCustomerById = async (id: any)  => {
 
 export const updateCustomer = async (id: any, data: any)  => {
     try {
-        let res = await axiosWrapper.put<any>(`/customers/${id}`, data);
+        let res = await axiosWrapperClient.put<any>(`/customers/${id}`, data);
         return res.data.data;
     } catch (error) {
         
         return {
-            hasError: true
+            hasError: true,
+            error
         };
     }
 };

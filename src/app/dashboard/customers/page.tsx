@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PlusIcon } from "@radix-ui/react-icons";
 import { columns } from "./columns";
 import { DataTable } from "@/components/DataTable";
-import { getCustomers } from "@/app/actions/customers/customerActions";
+import { getCustomers } from "@/app/actions/customers/getCustomers";
 
 export default async function Page() {
   const res = await getCustomers();
@@ -12,6 +12,7 @@ export default async function Page() {
   let customers = res.data;
 
   if(res?.hasError){
+    console.log(res)
     customers = []
   }
 

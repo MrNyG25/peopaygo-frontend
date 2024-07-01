@@ -1,31 +1,23 @@
-import axiosWrapper from "@/utils/axiosWrapper";
+import { axiosWrapperClient } from "@/utils/axiosWrapperClient";
 
 
-export const getEmployeesByCustomerId = async (clientId: number)  => {
-    try {
-        let res = await axiosWrapper.get<any>(`customers/${clientId}/employees`, );
-        return res.data;
-    } catch (error) {
-        return {
-            hasError: true
-        };
-    }
-};
+
 
 export const getEmployeeById = async (employeeId: number)  => {
     try {
-        let res = await axiosWrapper.get(`employees/${employeeId}`);
+        let res = await axiosWrapperClient.get(`employees/${employeeId}`);
         return res.data.data;
     } catch (error) {
         return {
-            hasError: true
+            hasError: true,
+            error
         };
     }
 };
 
 export const createEmployee = async (data: any)  => {
     try {
-        let res = await axiosWrapper.post(`employees`, data )
+        let res = await axiosWrapperClient.post(`employees`, data )
         return res.data.data;
     } catch (error) {
         return {
@@ -37,7 +29,7 @@ export const createEmployee = async (data: any)  => {
 
 export const updateEmployee = async (employeeId: number, data: any)  => {
     try {
-        let res = await axiosWrapper.put(`employees/${employeeId}`, data);
+        let res = await axiosWrapperClient.put(`employees/${employeeId}`, data);
         return res.data.data;
     } catch (error) {
         return {
@@ -50,7 +42,7 @@ export const updateEmployee = async (employeeId: number, data: any)  => {
 
 export const deleteEmployee = async (employeeId: number)  => {
     try {
-        let res = await axiosWrapper.delete(`employees/${employeeId}`);
+        let res = await axiosWrapperClient.delete(`employees/${employeeId}`);
         return res.data.data;
     } catch (error) {
         return {

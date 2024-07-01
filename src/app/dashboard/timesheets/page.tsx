@@ -4,9 +4,9 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { PlusIcon } from '@radix-ui/react-icons'
 import { columns } from './columns'
-import { getTimesheetsByCustomerId } from '@/app/actions/timesheets/timesheetsActions'
 import { PaymentFormPeriodDialog } from './components/PaymentPeriodFormDialog'
 import { getUserDataServer } from '@/utils/getUserDataServer'
+import { getTimesheetsByCustomerId } from '@/app/actions/timesheets/getTimesheetsByCustomerId'
 
 
 export default async function page() {
@@ -20,6 +20,7 @@ export default async function page() {
   let timesheetsTotal = res?.timesheetsTotal;
 
   if(res?.hasError){
+    console.log(res)
     timesheets = []
     timesheetsTotal = 0
   }

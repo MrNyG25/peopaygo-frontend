@@ -3,8 +3,8 @@ import Link from "next/link";
 import { PlusIcon } from "@radix-ui/react-icons";
 import { DataTable } from "@/components/DataTable";
 import { columns } from "./columns";
-import { getEmployeesByCustomerId } from "@/app/actions/employees/employeesActions";
 import { getUserDataServer } from "@/utils/getUserDataServer";
+import { getEmployeesByCustomerId } from "@/app/actions/employees/getEmployeesByCustomerId";
 
 
 export default async function page() {
@@ -16,6 +16,7 @@ export default async function page() {
   let employees = res?.data;
 
   if(res?.hasError){
+    console.log(res)
     employees = []
   }
 

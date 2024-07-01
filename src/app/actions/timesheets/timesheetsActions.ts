@@ -1,21 +1,9 @@
-import axiosWrapper from "@/utils/axiosWrapper";
+import { axiosWrapperClient } from "@/utils/axiosWrapperClient";
 
-
-export const getTimesheetsByCustomerId = async (customerId: number)  => {
-    try {
-        let res = await axiosWrapper.get<any>(`customers/${customerId}/timesheets`);
-        return res.data;
-    } catch (error) {
-        return {
-            hasError: true,
-            error
-        };
-    }
-};
 
 export const getTimesheetById = async (timesheetId: any)  => {
     try {
-        let res = await axiosWrapper.get<any>(`timesheets/${timesheetId}`);
+        let res = await axiosWrapperClient.get<any>(`timesheets/${timesheetId}`);
         return res.data.data;
     } catch (error) {
         return {
@@ -27,11 +15,12 @@ export const getTimesheetById = async (timesheetId: any)  => {
 
 export const createTimesheet = async (data: any)  => {
     try {
-        let res = await axiosWrapper.post(`timesheets`, data )
+        let res = await axiosWrapperClient.post(`timesheets`, data )
         return res.data.data;
     } catch (error) {
         return {
-            hasError: true
+            hasError: true,
+            error
         };
     }
 };
@@ -39,11 +28,12 @@ export const createTimesheet = async (data: any)  => {
 
 export const updateTimesheetAmount = async (timesheetId: number, data: any)  => {
     try {
-        let res = await axiosWrapper.post(`timesheets/${timesheetId}/updateAmount`, data )
+        let res = await axiosWrapperClient.post(`timesheets/${timesheetId}/updateAmount`, data )
         return res.data.data;
     } catch (error) {
         return {
-            hasError: true
+            hasError: true,
+            error
         };
     }
 };
@@ -51,11 +41,12 @@ export const updateTimesheetAmount = async (timesheetId: number, data: any)  => 
 
 export const updateTimesheet = async (timesheetId: number, data: any)  => {
     try {
-        let res = await axiosWrapper.put(`timesheets/${timesheetId}`, data )
+        let res = await axiosWrapperClient.put(`timesheets/${timesheetId}`, data )
         return res.data.data;
     } catch (error) {
         return {
-            hasError: true
+            hasError: true,
+            error
         };
     }
 };

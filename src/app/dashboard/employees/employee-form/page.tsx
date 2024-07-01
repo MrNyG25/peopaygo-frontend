@@ -1,4 +1,4 @@
-import { getPaymentTypes } from "@/app/actions/payment-types/paymentTypes";
+import { getPaymentTypes } from "@/app/actions/payment-types/getPaymentTypes";
 import EmployeeForm from "./components/EmployeeForm";
 
 export default async function Page() {

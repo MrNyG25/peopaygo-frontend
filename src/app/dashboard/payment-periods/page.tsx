@@ -3,7 +3,8 @@ import { DataTable } from '@/components/DataTable'
 import { Button } from '@/components/ui/button'
 import { columns } from './columns'
 import { getUserDataServer } from '@/utils/getUserDataServer'
-import { getPaymentPeriods, getPaymentPeriodsByCustomerId } from '@/app/actions/payment-periods/payment-periods'
+import { getPaymentPeriodsByCustomerId } from '@/app/actions/payment-periods/getPaymentPeriodsByCustomerId';
+import { getPaymentPeriods } from '@/app/actions/payment-periods/getPaymentPeriods';
 
 
 export default async function page() {
@@ -20,6 +21,7 @@ export default async function page() {
   let paymentPeriods = res?.data;
 
   if(res?.hasError || !res){
+    console.log(res)
     paymentPeriods = []
   }
   
