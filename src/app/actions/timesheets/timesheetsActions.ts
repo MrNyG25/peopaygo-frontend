@@ -39,7 +39,7 @@ export const createTimesheet = async (data: any)  => {
 
 export const updateTimesheetAmount = async (timesheetId: number, data: any)  => {
     try {
-        let res = await axios.put(`http://127.0.0.1:8000/api/timesheets/${timesheetId}/updateAmount`, data )
+        let res = await axios.post(`http://127.0.0.1:8000/api/timesheets/${timesheetId}/updateAmount`, data )
         return res.data.data;
     } catch (error) {
         return {

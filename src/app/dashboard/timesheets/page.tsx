@@ -12,6 +12,7 @@ import { getUserDataServer } from '@/utils/getUserDataServer'
 export default async function page() {
   
   let userData = getUserDataServer();
+
   
   const res = await getTimesheetsByCustomerId(userData.user.customer.id);
   

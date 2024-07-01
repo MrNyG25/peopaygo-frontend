@@ -1,5 +1,4 @@
-'use client'
-
+"use client"
 import { ColumnDef } from '@tanstack/react-table'
 
 import { MoreHorizontal, ArrowUpDown } from 'lucide-react'
@@ -16,6 +15,7 @@ import {
 import { currencyFormat } from '@/utils/currencyFormat'
 import { Pencil1Icon, TimerIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
+import { TimesheetAmountFormDialog } from './components/TimesheetAmountFormDialog'
 
 
 export type Timesheet = {
@@ -27,6 +27,7 @@ export type Timesheet = {
   timesheet_status: string
 }
 
+let toggle = false;
 
 export const columns: ColumnDef<Timesheet>[] = [
   {
@@ -69,12 +70,23 @@ export const columns: ColumnDef<Timesheet>[] = [
   },
   {
     id: 'actions',
+    header: 'Actions',
     cell: ({ row }) => {
+      console.log(row)
       const timesheet = row.original
       const id = row.original?.id
       return (
         <>
-          <DropdownMenu>
+          <Link href={{
+                      pathname: '/dashboard/timesheets/timesheet-form',
+                      query: { id },
+                    }}>
+            <Button>
+              <Pencil1Icon className="mr-1 h-4 w-4"/> Edit
+            </Button>
+          </Link>
+          <TimesheetAmountFormDialog timesheet={timesheet} />
+          {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant='ghost' className='h-8 w-8 p-0'>
                 <span className='sr-only'>Open menu</span>
@@ -87,13 +99,15 @@ export const columns: ColumnDef<Timesheet>[] = [
                       pathname: '/dashboard/timesheets/timesheet-form',
                       query: { id },
                     }}>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem >
                     <Pencil1Icon className="mr-1 h-4 w-4"/> Edit
                   </DropdownMenuItem>
               </Link>
+              
                 
             </DropdownMenuContent>
-          </DropdownMenu>
+           
+          </DropdownMenu> */}
 
         </>
       )
