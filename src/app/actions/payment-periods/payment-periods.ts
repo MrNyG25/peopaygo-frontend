@@ -15,8 +15,8 @@ export const createPaymentPeriod = async (data: any)  => {
 
 export const getPaymentPeriods= async ()  => {
     try {
-        let res = await axios.get(`${API_URL}customers/payment_periods`,  )
-        return res.data.data;
+        let res = await axios.get(`${API_URL}payment_periods`,  )
+        return res.data;
     } catch (error) {
         return {
             hasError: true,

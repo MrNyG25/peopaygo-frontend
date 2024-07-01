@@ -39,17 +39,7 @@ export function Sidebar() {
             Menu
           </h2>
           <div className="space-y-1">
-            <Link href="/dashboard/customers">
-              <Button
-                variant={pathname == "/dashboard/customers" ? "secondary" : "ghost"}
-                size="sm"
-                className="w-full justify-start"
-              >
-                <AvatarIcon className="mr-2 h-4 w-4" />
-                Customers
-              </Button>
-            </Link>
-            {ROLE === "customer" && (
+            {ROLE === "customer" ? (
               <>
                 <Link href="/dashboard/employees">
                   <Button
@@ -72,6 +62,17 @@ export function Sidebar() {
                   </Button>
                 </Link>
               </>
+            ) : (
+              <Link href="/dashboard/customers">
+                <Button
+                  variant={pathname == "/dashboard/customers" ? "secondary" : "ghost"}
+                  size="sm"
+                  className="w-full justify-start"
+                >
+                  <AvatarIcon className="mr-2 h-4 w-4" />
+                  Customers
+                </Button>
+              </Link>
             )}
             <Link href="/dashboard/payment-periods">
               <Button
