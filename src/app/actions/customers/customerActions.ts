@@ -1,8 +1,9 @@
 import axios from "axios";
+const API_URL = process.env.apiUrl;
 
 export const createCustomer = async (data: any)  => {
     try {
-        let res = await axios.post<any>('http://127.0.0.1:8000/api/customers', data)
+        let res = await axios.post<any>(`${API_URL}customers`, data)
         return res.data;
     } catch (error) {
         return {
@@ -14,7 +15,7 @@ export const createCustomer = async (data: any)  => {
 
 export const getCustomers = async ()  => {
     try {
-        let res = await axios.get<any>('http://127.0.0.1:8000/api/customers');
+        let res = await axios.get<any>(`${API_URL}customers`);
         return res.data;
     } catch (error) {
         
@@ -27,7 +28,7 @@ export const getCustomers = async ()  => {
 
 export const getCustomerById = async (id: any)  => {
     try {
-        let res = await axios.get<any>(`http://127.0.0.1:8000/api/customers/${id}`);
+        let res = await axios.get<any>(`${API_URL}customers/${id}`);
         return res.data.data;
     } catch (error) {
         
