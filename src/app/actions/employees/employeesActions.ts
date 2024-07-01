@@ -45,3 +45,16 @@ export const updateEmployee = async (employeeId: number, data: any)  => {
         };
     }
 };
+
+
+
+export const deleteEmployee = async (employeeId: number)  => {
+    try {
+        let res = await axios.delete(`${API_URL}employees/${employeeId}`);
+        return res.data.data;
+    } catch (error) {
+        return {
+            hasError: true
+        };
+    }
+};

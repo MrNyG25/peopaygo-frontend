@@ -18,6 +18,7 @@ import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 import { CustomDialog } from '@/components/CustomDialog'
 import { Employee } from './interfaces/EmployeeResponse'
+import { deleteEmployee } from '@/app/actions/employees/employeesActions'
 
 
 export const columns: ColumnDef<Employee>[] = [
@@ -80,7 +81,11 @@ export const columns: ColumnDef<Employee>[] = [
                 </DropdownMenuItem>
             </Link>
 
-            <DropdownMenuItem onClick={() => console.log(id)}>
+            <DropdownMenuItem onClick={async () => {
+              let res = await deleteEmployee(id)
+              console.log(res);
+              
+            }}>
               <TrashIcon className="mr-1 h-4 w-4"/> Delete
             </DropdownMenuItem>
               
