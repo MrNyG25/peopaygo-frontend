@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { currencyFormat } from '@/utils/currencyFormat'
-import { Pencil1Icon, TimerIcon } from '@radix-ui/react-icons'
+import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 import { CustomDialog } from '@/components/CustomDialog'
 import { Employee } from './interfaces/EmployeeResponse'
@@ -79,6 +79,10 @@ export const columns: ColumnDef<Employee>[] = [
                   <Pencil1Icon className="mr-1 h-4 w-4"/> Edit
                 </DropdownMenuItem>
             </Link>
+
+            <DropdownMenuItem onClick={() => console.log(id)}>
+              <TrashIcon className="mr-1 h-4 w-4"/> Delete
+            </DropdownMenuItem>
               
           </DropdownMenuContent>
         </DropdownMenu>

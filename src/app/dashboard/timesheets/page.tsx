@@ -24,9 +24,6 @@ export default async function page() {
     timesheetsTotal = 0
   }
   
-  
-
-
   return (
     <section >
       <div className='container'>

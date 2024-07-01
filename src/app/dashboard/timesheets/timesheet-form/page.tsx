@@ -10,7 +10,11 @@ export default async function Page() {
     
   const res = await getEmployeesByCustomerId(userData.user.customer.id);
 
-  const employees = res;
+  let employees = res.data;
+
+  if(res?.hasError){
+    employees = []
+  }
   
   return (
     <div className="w-full h-full flex-col justify-center py-10">

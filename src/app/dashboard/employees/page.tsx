@@ -11,10 +11,12 @@ export default async function page() {
 
   let userData = getUserDataServer();
 
-  let employees = await getEmployeesByCustomerId(userData.user.customer.id);
+  let res = await getEmployeesByCustomerId(userData.user.customer.id);
+  
+  let employees = res?.data;
 
-  if(!employees){
-    return <p>Loading</p>
+  if(res?.hasError){
+    employees = []
   }
 
   return (

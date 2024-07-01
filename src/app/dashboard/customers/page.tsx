@@ -9,8 +9,11 @@ import { getCustomers } from "@/app/actions/customers/customerActions";
 export default async function Page() {
   const res = await getCustomers();
 
-  const customers = res.data;
+  let customers = res.data;
 
+  if(res?.hasError){
+    customers = []
+  }
 
   return (
     <section>

@@ -99,7 +99,7 @@ export default function EmployeeForm({paymentTypes}: any) {
     let res: any = null;
     let dataObj = {
         ...data,
-        customer_id: userData.user_id
+        customer_id: userData.user.customer.id
     }
     if(id){
       res = await updateEmployee(+id!,dataObj);
@@ -126,7 +126,6 @@ export default function EmployeeForm({paymentTypes}: any) {
       ),
     });
 
-    setIsSaving(false);
     router.push('/dashboard/employees');
   };
 

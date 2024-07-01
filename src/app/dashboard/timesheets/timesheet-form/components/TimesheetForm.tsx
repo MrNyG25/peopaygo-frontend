@@ -30,8 +30,8 @@ const FormSchema = z.object({
       message: "Employee is required.",
     }),
     payment_type: z.string(),
-    amount: z.string({
-        message: "Amount must be a valid number.",
+    amount: z.string().min(1, {
+      message: "Amount is required.",
     }),
     note: z.string().optional(),
 }).refine((data) => !(Number(data.amount) < 12 && data?.payment_type == "hour"), {
@@ -78,11 +78,12 @@ export default function TimesheetForm({employees}: any){
         id: data.employee.id,
         name: data.employee.name,
       })
+
       form.reset({
+        employee_id: String(data.employee.id),
         payment_type: data.employee.payment_type.name, 
-        amount: data.amount || '', 
+        amount: String(data.amount) || '', 
         note: data.note || '',
-      
       });
     }
 
@@ -122,7 +123,7 @@ export default function TimesheetForm({employees}: any){
   
 
     const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-        console.log(data)
+      
       setIsSaving(true)
 
       let res: any = null;
