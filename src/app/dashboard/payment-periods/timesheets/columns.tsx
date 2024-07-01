@@ -7,8 +7,7 @@ import { Button } from '@/components/ui/button'
 import { currencyFormat } from '@/utils/currencyFormat'
 import { Pencil1Icon } from '@radix-ui/react-icons'
 import Link from 'next/link'
-import { TimesheetAmountFormDialog } from './components/TimesheetAmountFormDialog'
-import { Timesheet } from './interfaces/TimesheetsResponse'
+import { Timesheet } from '../../timesheets/interfaces/TimesheetsResponse'
 
 
 
@@ -51,7 +50,7 @@ export const columns: ColumnDef<Timesheet>[] = [
     accessorKey: 'timesheet_status.name',
     header: 'Timesheet Status'
   },
-  {
+  /* {
     id: 'actions',
     header: 'Actions',
     cell: ({ row }) => {
@@ -65,16 +64,11 @@ export const columns: ColumnDef<Timesheet>[] = [
                       query: { id },
                     }}>
             <Button>
-              <Pencil1Icon className="mr-1 h-4 w-4"/> Timesheets
+              <Pencil1Icon className="mr-1 h-4 w-4"/> Edit
             </Button>
           </Link>
-          {
-           timesheet.employee?.payment_type_id == 1  && <TimesheetAmountFormDialog 
-                  timesheet={timesheet} 
-                />
-          }
         </>
       )
     }
-  }
+  } */
 ]

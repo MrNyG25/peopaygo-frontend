@@ -13,9 +13,10 @@ export interface Timesheet {
 }
 
 export interface Employee {
-    id:              number;
-    name:            string;
-    pay_rate:        number;
+    id:                  number;
+    name:                string;
+    pay_rate:            number;
+    timesheet_status_id: number;
 }
 
 export interface TimesheetStatus {

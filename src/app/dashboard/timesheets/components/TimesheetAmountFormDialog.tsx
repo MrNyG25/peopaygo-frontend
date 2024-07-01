@@ -51,6 +51,7 @@ export function TimesheetAmountFormDialog({timesheet}) {
   const router = useRouter();
 
   const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -88,12 +89,13 @@ export function TimesheetAmountFormDialog({timesheet}) {
     });
 
     setIsSaving(false);
+    setIsOpen(false)
     router.refresh()
   };
  
   return (
     <>
-      <Dialog >
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <Button  className="ml-3" variant="outline">
             <CountdownTimerIcon className="mr-1 h-4 w-4" />
@@ -102,7 +104,7 @@ export function TimesheetAmountFormDialog({timesheet}) {
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Amount update</DialogTitle>
+            <DialogTitle>Amount update </DialogTitle>
           </DialogHeader>
           <Form {...form}>
             <form

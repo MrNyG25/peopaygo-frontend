@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { AvatarIcon, ExitIcon, FileIcon, PersonIcon } from '@radix-ui/react-icons';
+import { AvatarIcon, ColumnsIcon, ExitIcon, FileIcon, PersonIcon } from '@radix-ui/react-icons';
 import { usePathname, useRouter } from "next/navigation";
 import { deleteCookie } from "cookies-next";
 import { getUserDataClient } from '@/utils/getUserDataClient';
@@ -73,6 +73,16 @@ export function Sidebar() {
                 </Link>
               </>
             )}
+            <Link href="/dashboard/payment-periods">
+              <Button
+                variant={pathname == "/dashboard/payment-periods" ? "secondary" : "ghost"}
+                size="sm"
+                className="w-full justify-start"
+              >
+                <ColumnsIcon className="mr-2 h-4 w-4" />
+                Checks
+              </Button>
+            </Link>
             <Button onClick={handleLogout} variant="ghost" size="sm" className="w-full justify-start">
               <ExitIcon className="mr-2 h-4 w-4" />
               Logout

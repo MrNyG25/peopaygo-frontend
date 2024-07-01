@@ -30,12 +30,13 @@ const FormSchema = z.object({
       message: "Employee is required.",
     }),
     payment_type: z.string(),
-    amount: z.string().min(1, {
-      message: "Amount is required.",
-    }),
+    amount: z.string(),
     note: z.string().optional(),
 }).refine((data) => !(Number(data.amount) < 12 && data?.payment_type == "hour"), {
   message: "All employees in the state of Florida must be paid min $12",
+  path: ["amount"],
+}).refine((data) => !(data?.amount == "" && data?.payment_type == "hour"), {
+  message: "Amount is required.",
   path: ["amount"],
 });
 
@@ -82,7 +83,7 @@ export default function TimesheetForm({employees}: any){
       form.reset({
         employee_id: String(data.employee.id),
         payment_type: data.employee.payment_type.name, 
-        amount: String(data.amount) || '', 
+        amount: data.amount ? String(data.amount) : '', 
         note: data.note || '',
       });
     }

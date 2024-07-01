@@ -28,6 +28,8 @@ import {
 } from "@/components/ui/form";
 import { ButtonLoading } from "@/components/ButtonLoading";
 import { createPaymentPeriod } from "@/app/actions/payment-periods/payment-periods";
+import { useRouter } from "next/navigation";
+import { set } from "date-fns";
 
 interface Props {
   timesheetsIds: Number[];
@@ -50,11 +52,12 @@ const FormSchema = z.object({
 });
 
 export function PaymentFormPeriodDialog({timesheetsIds}: Props) {
-  const [isOpen, setIsOpen] = useState(false);
 
   const { toast } = useToast();
+  const router = useRouter();
 
   const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -93,16 +96,18 @@ export function PaymentFormPeriodDialog({timesheetsIds}: Props) {
     toast({
       title: "Message",
       description: (
-        <p>Timesheet created successfully</p>
+        <p>Checke created successfully</p>
       ),
     });
 
+    setIsOpen(false)
+    router.refresh()
     setIsSaving(false);
   };
 
   return (
     <>
-      <Dialog>
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <Button className="ml-3" variant="outline">
             {" "}
