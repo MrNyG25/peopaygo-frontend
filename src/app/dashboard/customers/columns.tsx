@@ -33,13 +33,12 @@ export const columns: ColumnDef<Customer>[] = [
     }
   },
   {
+    accessorKey: 'user.email',
+    header: 'Email',
+  },
+  {
     accessorKey: 'created_at',
     header: 'Created at',
-    cell: ({ row }) => {
-      const date = new Date(row.getValue('created_at'))
-      const formatted = date.toLocaleDateString()
-      return <div className='font-medium'>{formatted}</div>
-    }
   },
   {
     id: 'actions',

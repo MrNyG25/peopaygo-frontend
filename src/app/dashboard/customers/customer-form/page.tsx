@@ -29,16 +29,20 @@ const FormSchema = z.object({
   email: z.string().email({
     message: "Email must be a valid.",
   }),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
-  }),
-  password_confirmation: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
-  }),
-}).refine((data) => data.password === data.password_confirmation, {
+  actual_password: z.optional(
+    z.string()
+  ),
+  password: z.optional(
+    z.string()
+  ),
+  password_confirmation: z.optional(
+    z.string()
+  ),
+}).refine((data) => !(data.password !== data.password_confirmation), {
   message: "Passwords don't match",
   path: ["password_confirmation"],
 });
+
 
 export default function Page() {
   const router = useRouter()
@@ -47,6 +51,7 @@ export default function Page() {
   const id = searchParams.get('id')
 
   const [isSaving, setIsSaving] = useState<boolean>(false)
+  const [changePassword, setChangePassword] = useState<boolean>(false)
 
 
 
@@ -56,9 +61,24 @@ export default function Page() {
       name: "",
       email: "",
       password: "",
-      password_confirmation: ""
+      password_confirmation: "",
+      actual_password: ""
     },
   });
+
+  useEffect(() => {
+      
+    const subscription = form.watch((value, { name }) => {
+      if(name == "actual_password"){ 
+        if(value){
+          setChangePassword(true)
+        }else{
+          setChangePassword(false)
+        }
+      }
+    })
+    return () => subscription.unsubscribe()
+  }, [form.watch])
 
   useEffect(() => {
   
@@ -77,12 +97,26 @@ export default function Page() {
 
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    if(data.actual_password && !data.password){
+      toast({
+        variant: 'destructive',
+        title: "Message",
+        description: (
+          <p>Password fields are required</p>
+        ),
+      });
+      return;
+    }
     setIsSaving(true);
 
     let res: any = null;
 
     if(id){
-      res = await updateCustomer(+id!,data);
+      let dataObj = {
+        ...data,
+        change_password: changePassword
+      }
+      res = await updateCustomer(+id!,dataObj);
     }else{
       res = await createCustomer(data);
     }
@@ -133,6 +167,7 @@ export default function Page() {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="email"
@@ -146,6 +181,21 @@ export default function Page() {
               </FormItem>
             )}
           />
+
+          {id && (<FormField
+            control={form.control}
+            name="actual_password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Actual password</FormLabel>
+                <FormControl>
+                  <Input type="password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />)}
+
           <FormField
             control={form.control}
             name="password"
@@ -159,6 +209,7 @@ export default function Page() {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="password_confirmation"
