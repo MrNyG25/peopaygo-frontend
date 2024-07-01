@@ -19,55 +19,32 @@ export const columns: ColumnDef<PaymentPeriod>[] = [
   {
     accessorKey: 'start_at',
     header: 'Start At',
-    cell: ({ row }) => {
-        const date = new Date(row.getValue('start_at'))
-        const formatted = date.toLocaleDateString()
-        return <div className='font-medium'>{formatted}</div>
-    }
   },
   {
     accessorKey: 'end_at',
     header: 'End At',
-    cell: ({ row }) => {
-        const date = new Date(row.getValue('end_at'))
-        const formatted = date.toLocaleDateString()
-        return <div className='font-medium'>{formatted}</div>
-    }
   },
   {
     accessorKey: 'check_date',
     header: 'Check date',
-    cell: ({ row }) => {
-        const date = new Date(row.getValue('check_date'))
-        const formatted = date.toLocaleDateString()
-        return <div className='font-medium'>{formatted}</div>
-    }
   },
   {
     accessorKey: 'created_at',
     header: 'Created at',
-    cell: ({ row }) => {
-      const date = new Date(row.getValue('created_at'))
-      const formatted = date.toLocaleDateString()
-      return <div className='font-medium'>{formatted}</div>
-    }
   },
   {
     id: 'actions',
     header: 'Actions',
     cell: ({ row }) => {
-      console.log(row)
-
-      const date = new Date(row.getValue('check_date'))
-      const checkDateformatted = date.toLocaleDateString()
-
-      const timesheet = row.original
+      
+      const paymentPeriod = row.original
+      const paymentPeriodCheckDate = row.original.check_date
       const id = row.original?.id
       return (
         <>
           <Link href={{
                       pathname: '/dashboard/payment-periods/timesheets',
-                      query: { id, check_date: checkDateformatted },
+                      query: { id, check_date:  paymentPeriodCheckDate},
                     }}>
             <Button>
               <ClipboardIcon className="mr-1 h-4 w-4"/> Timesheets
